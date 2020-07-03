@@ -1,7 +1,7 @@
 # AutoSwitch
 No fee Autoswitcher HiveOS Flight Sheet for NiceHash
 
-Редактируем config.conf, вставляя туда свои FARM_ID, RIG_ID из ссылки в браузере.
+Редактируем config.conf, вставляя туда свои FARM_ID, RIG_ID из ссылки в браузере.<br>
 Там же редактируем FACTORSHASH, формат такой что первым идет ALGO, затем FACTORS и YOUR_HASH.
 Там же добавляем алгоритм вписывая новую строку, с новым алгоритмом на этом все!, алга добавленна (если она есть на найсе).
 ALGO должно соответствовать названию алгоритма из найса https://api2.nicehash.com/main/api/v2/public/simplemultialgo/info
