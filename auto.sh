@@ -203,9 +203,9 @@ do
 		callalgo="" 
 		cnt=0
 	fi
-	printf "Cur algo: %-19s Cur profit: %s BTC %s\n" "$cur_algo" "$cur_profit" ""
-	printf "Top algo: %-19s Top profit: %s BTC Diff: %s Cnt: %s\n" "$top_algo" "$top_profit" "$d%" "$cnt"
-	printf "%-16s %-12s %-16s %-12s %-16s %-12s\n" "Algo" "Profit" "Algo" "Profit" "Algo" "Profit"
+	printf "Cur algo: %-16s Cur profit: %s BTC Cnt: %s\n" "$cur_algo" "$cur_profit" "$cnt"
+	printf "Top algo: %-16s Top profit: %s BTC Diff: %s\n" "$top_algo" "$top_profit" "$d%"
+	printf "%-15s %-10s %-15s %-10s\n" "Algo" "Profit" "Algo" "Profit"
 	for (( x = 0; x < ${#AUTOFS[*]}; x++ ))
 	do
 		al1=$(echo "${AUTOFS[$x]}" | jq .[0] | tr -d \")
@@ -213,10 +213,7 @@ do
 		((x++))
 		al2=$(echo "${AUTOFS[$x]}" | jq .[0] | tr -d \")
 		pr2=$(echo "${AUTOFS[$x]}" | jq .[2] | tr -d \")
-		((x++))
-		al3=$(echo "${AUTOFS[$x]}" | jq .[0] | tr -d \")
-		pr3=$(echo "${AUTOFS[$x]}" | jq .[2] | tr -d \")
-		printf "%-16s %-12s %-16s %-12s %-16s %-12s\n" "$al1" "$pr1" "$al2" "$pr2" "$al3" "$pr3"
+		printf "%-15s %-10s %-15s %-10s\n" "$al1" "$pr1" "$al2" "$pr2"
 	done
 	#echo "||| Best: ${AUTOFS[0]} ${AUTOFS[1]} ${AUTOFS[2]} ${AUTOFS[3]} ${AUTOFS[4]} ${AUTOFS[5]} ${AUTOFS[6]} ${AUTOFS[7]} ${AUTOFS[8]} ${AUTOFS[9]} ${AUTOFS[10]} ${AUTOFS[11]} "
 	echo ""
