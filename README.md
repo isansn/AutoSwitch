@@ -10,7 +10,7 @@ CALC_COUNT - число отсчетов, с профитом превышающ
 Редактируем config.conf или config.RIG_NAME_X.conf, вставляя туда свои FARM_ID, RIG_ID из ссылки в браузере.<br>
 TOKEN получаем в вебморде хайва, щелкаем по аккаунту, ищем "Создать новый персональный" API-токен, создаем, жмем "Показать".
 FACTORSHASH первым идет ALGO, затем FACTORS, потом YOUR_HASH и не обязательное поле FS_NAME.<br>
-FS_NAME это имя полетного листа, если его не указывать, то на hive оно должно соответствовать формату Autoswitch NAME_ALDO_FROM_NICE_TITLE (Autoswitch DaggerHashimoto) взято из поля title https://api2.nicehash.com/main/api/v2/public/simplemultialgo/info. <br>
+FS_NAME это имя полетного листа, если его не указывать, то на hive оно должно соответствовать формату: <br>Autoswitch NAME_ALDO_FROM_NICE_TITLE (Autoswitch DaggerHashimoto) взято из поля title https://api2.nicehash.com/main/api/v2/public/simplemultialgo/info. <br>
 FACTORS делитель для расчета прибыльности, в основном подбирается в ручную.<br>
 Там же добавляем алгоритм вписывая новую строку, с новым алгоритмом, все алга добавленна (если она есть на найсе).<br>
 
