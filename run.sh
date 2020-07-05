@@ -46,4 +46,3 @@ do
 	echo $nice > $NICE_FILE
 	sleep $INTERVAL
 done
-
