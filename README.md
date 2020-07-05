@@ -35,6 +35,15 @@ FACTORS делитель для расчета прибыльности, в ос
 <br>
 Конфиги и полетные листы подгружаются при запуске.<br>
 Для перезапуска команда ./run.sh stop не обязательна, при старте скрипт сам завершит придидущие процессы и начнет работать с новыми настройками. <br>
-<br><br>
+<br>
+Установка<br>
+git clone https://github.com/isansn/AutoSwitch.git<br>
+cd AutoSwitch<br>
+chmod +x auto.sh run.sh<br>
+Для начала меняем только RIG_ID, FARM_ID и TOKEN<br>
+nano config.conf <br>
+./run.sh start &<br>
+screen -r auto<br>
+<br>
 Добавлена возможность называть полетные листы.<br>
 Пример в config.eth_from_ethermine_to_nice.conf дает возможность переключать риг с ethermine на nice (или ZIL), только тогда когда профит на nice по DaggerHashimoto превышает KAWPOW, GrinCuckatoo32, BeamV3, GrinCuckatoo31, Cuckaroom и обратно на ethermine.
