@@ -54,22 +54,25 @@ do
 	then
 		factors=$(echo "$FACTORSHASH" | jq .[$i][1])
 		hash=$(echo "$FACTORSHASH" | jq .[$i][2])
+		fsname=$(echo "$FACTORSHASH" | jq .[$i][3] | tr -d \")
 		if (( $(echo "$hash > 0" |bc -l) ))
 		then
-			val="Autoswitch $algo"
-
 			n=0
 			tmp0=""
 			t=$a
+			[ ! "$fsname" == "null" ] && val=$fsname
+			[ "$fsname" == "null" ] && val="Autoswitch $algo"
 			while [ ! "$tmp0" == "null" ]
 			do
 				tmp0=$(echo "$FS" | jq .data[$n].name | tr -d \")
-				if [ "$val" = "$tmp0" ]
+				
+				if [ "$val" == "$tmp0" ]
 				then
 					FS_ALGO[$a]=$algo
 					FS_ID[$a]=$(echo "$FS" | jq .data[$n].id)
 					FS_FACTORS[$a]=$(echo "$FACTORSHASH" | jq .[$i][1])
 					FS_HASH[$a]=$(echo "$FACTORSHASH" | jq .[$i][2])
+					FS_NAME[$a]=$val
 					printf "\e[1;33m%-30s %-20s %s\n\e[0m" "Algo: ${FS_ALGO[$a]}," "Factors: ${FS_FACTORS[$a]}," "Hash: ${FS_HASH[$a]}"
 					((a++))
 				fi
@@ -113,7 +116,7 @@ do
 				if [ "${FS_ALGO[$x]}" = "$title" ]
 				then
 					profit=$(echo "${FS_FACTORS[$x]} ${FS_HASH[$x]} $paying" | awk '{printf "%.8f", $1 * $2 * $3}')
-					AUTOFS[${#AUTOFS[*]}]="[\"${FS_ALGO[$x]}\",${FS_ID[$x]},$profit]"
+					AUTOFS[${#AUTOFS[*]}]="[\"${FS_ALGO[$x]}\",${FS_ID[$x]},$profit,\"${FS_NAME[$x]}\"]"
 				fi
 			done
 
@@ -141,8 +144,9 @@ do
 		top_algo=$(echo "${AUTOFS[0]}" | jq .[0])
 		top_id=$(echo "${AUTOFS[0]}" | jq .[1])
 		top_profit=$(echo "${AUTOFS[0]}" | jq .[2])
+		top_name=$(echo "${AUTOFS[0]}" | jq .[3])
 		fs_apply
-		MESSAGE="Autoswitch: Switch to $(echo $top_algo | tr -d \") Profit=$top_profit BTC/day "
+		MESSAGE="Autoswitch: Switch to $(echo $top_name | tr -d \") Profit=$top_profit BTC/day "
 		print
 	fi
 	cur_algo=$(echo "$best" | jq .[0])
@@ -161,6 +165,7 @@ do
 	cur_algo=$(echo "$best" | jq .[0])
 	cur_profit=$(echo "$best" | jq .[2])
 	top_profit=$(echo "${AUTOFS[0]}" | jq .[2])
+	top_name=$(echo "${AUTOFS[0]}" | jq .[3])
 	if [ ! "$top_algo" == "$cur_algo" ]; then
 		d=$(echo "$top_profit $cur_profit" | awk '{printf "%.3f", $1 * 100 / $2 -100}')
 		if (( $(echo "$d > $MIN_DIFF" |bc -l) ))
@@ -173,7 +178,7 @@ do
 				best=${AUTOFS[0]}
 				echo "Switch to $top_algo"
 				fs_apply
-				MESSAGE="Autoswitch: Switch to $(echo $top_algo | tr -d \") Profit=$top_profit BTC/day "
+				MESSAGE="Autoswitch: Switch to $(echo $top_name | tr -d \") Profit=$top_profit BTC/day "
 				print
 			fi
 		else
