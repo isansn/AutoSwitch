@@ -1,6 +1,9 @@
 #!/bin/bash
 source "conf.all.conf"
 
+nice=$(wget -q -O - https://api2.nicehash.com/main/api/v2/public/simplemultialgo/info)
+echo $nice > $NICE_FILE
+
 for n in $@
 do
 	[ "$n" = "-h" ] && echo "Use:	run.sh start [all]" && echo " or:	run.sh stop" && echo "start		start only config.conf" && echo "start all	start other config.RIG_NAME.conf without config.conf"
@@ -43,4 +46,3 @@ do
 	echo $nice > $NICE_FILE
 	sleep $INTERVAL
 done
-
