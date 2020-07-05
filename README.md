@@ -34,5 +34,5 @@ Autoswitch ALGO_FROM_NICE_TITLE<br>
 Конфиги и полетные листы подгружаются при запуске.<br>
 Для перезапуска команда ./run.sh stop не обязательна, при старте скрипт сам завершит придидущие процессы и начнет работать с новыми настройками. <br>
 <br><br>
-Добавлена возможность называть полетные листы
+Добавлена возможность называть полетные листы.<br>
 Пример в из config.eth_from_ethermine_to_nice.conf дает возможность переключать риг с ethermine на nice только тогда когда профит на nice по DaggerHashimoto превышает KAWPOW, GrinCuckatoo32, BeamV3, GrinCuckatoo31, Cuckaroom и обратно на ethermine.
