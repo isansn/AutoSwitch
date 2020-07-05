@@ -17,8 +17,8 @@ function stop {
 	then
 		for i in $(cat $PIDS_FILE); do
 			kill -9 $i >/dev/null 2>/dev/null
-			echo "" > $PIDS_FILE
 		done
+		echo "" > $PIDS_FILE
 	fi
 }
 
