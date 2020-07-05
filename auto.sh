@@ -185,6 +185,12 @@ do
 		callalgo="" 
 		cnt=0
 	fi
+
+	if [ "$top_algo" == "$cur_algo" ]; then
+		dfrof=$(echo "${AUTOFS[1]}" | jq .[2])
+		d=$(echo "$cur_profit $dfrof" | awk '{printf "%.3f", ($1 * 100 / $2 - 100)*-1}')
+	fi
+
 	printf "Cur algo: %-16s Cur profit: %s BTC Cnt: %s\n" "$cur_algo" "$cur_profit" "$cnt"
 	printf "Top algo: %-16s Top profit: %s BTC Diff: %s\n" "$top_algo" "$top_profit" "$d%"
 	printf "%-15s %-10s %-15s %-10s\n" "Algo" "Profit" "Algo" "Profit"
@@ -199,6 +205,5 @@ do
 	done
 	echo ""
 done
-
 
 
