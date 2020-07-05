@@ -85,18 +85,19 @@ done
 
 best=""
 
+TIME=$(stat --format="%Y" $NICE_FILE)
 while true
 do
-	while [ ! -f $NICE_FILE ]
+	while [ "$TIME" -eq $(stat --format="%Y" $NICE_FILE) ]
 	do 
 		sleep 1
 	done
-
+	TIME=$(stat --format="%Y" $NICE_FILE)
+	
 	title=""
 	unset AUTOFS
 	
 	nice=$(cat $NICE_FILE)
-	rm $NICE_FILE
 
 	i=0
 	max=0
@@ -197,7 +198,6 @@ do
 		printf "%-15s %-10s %-15s %-10s\n" "$al1" "$pr1" "$al2" "$pr2"
 	done
 	echo ""
-	sleep $INTERVAL
 done
 
 
