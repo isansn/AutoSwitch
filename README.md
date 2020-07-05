@@ -23,7 +23,8 @@ Autoswitch ALGO_FROM_NICE_TITLE<br>
 
 Запуск командой ./run.sh start &<br>
 Подойдет для одного рига необходимо изменить только config.conf.<br>
-При таком запуске, запустится одна копия с применением config.conf. Просмотреть можно командой screen -r auto<br>
+При таком запуске, запустится одна копия с применением config.conf.<br>
+Просмотреть можно командой screen -r auto<br>
 <br>
 Запуск командой ./run.sh start all &<br>
 При таком запуске, запустится столько копий, сколько конфигов в формате config.RIG_NAME_X.conf. Просмотреть можно командой screen -r auto-RIG_NAME_X<br> 
