@@ -1,7 +1,7 @@
 #!/bin/bash
 source "conf.all.conf"
 
-nice=$(wget -q -O - https://api2.nicehash.com/main/api/v2/public/simplemultialgo/info)
+nice=`curl -k -s $niceUrl`
 echo $nice > $NICE_FILE
 
 for n in $@
@@ -42,7 +42,7 @@ echo $$ >> $PIDS_FILE
 
 while true
 do
-	nice=$(wget -q -O - https://api2.nicehash.com/main/api/v2/public/simplemultialgo/info)
+	nice=`curl -k -s $niceUrl`
 	echo $nice > $NICE_FILE
 	sleep $INTERVAL
 done
