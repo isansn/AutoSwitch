@@ -76,6 +76,8 @@ do
 					FS_NAME[$a]=$val
 					printf "\e[1;33m%-30s %-20s %s\n\e[0m" "Algo: ${FS_ALGO[$a]}," "Factors: ${FS_FACTORS[$a]}," "Hash: ${FS_HASH[$a]}"
 					((a++))
+					((n++))
+					break
 				fi
 				((n++))
 			done
