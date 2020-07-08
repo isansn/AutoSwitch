@@ -62,11 +62,11 @@ do
 			t=$a
 			[ ! "$fsname" == "null" ] && val=$fsname
 			[ "$fsname" == "null" ] && val="Autoswitch $algo"
-			echo "fs in conf: $fsname - $val" >> $LOG_FILE
+			echo "FS in conf: $fsname - $val" >> $LOG_FILE
 			while [ ! "$tmp0" == "null" ]
 			do
 				tmp0=$(echo "$FS" | jq .data[$n].name | tr -d \")
-				echo "fs in hive: $tmp0; in conf $val" >> $LOG_FILE
+				echo "FS in hive: $tmp0; in conf $val" >> $LOG_FILE
 				if [ "$val" == "$tmp0" ]
 				then
 					FS_ALGO[$a]=$algo
@@ -77,10 +77,12 @@ do
 					printf "\e[1;33m%-30s %-20s %s\n\e[0m" "Algo: ${FS_ALGO[$a]}," "Factors: ${FS_FACTORS[$a]}," "Hash: ${FS_HASH[$a]}"
 					((a++))
 					((n++))
+					echo "FS $val find in FS Hive" >> $LOG_FILE
 					break
 				fi
 				((n++))
 			done
+			[ $t -eq $a ] && echo "FS $val not find in FS Hive" >> $LOG_FILE
 			[ $t -eq $a ] && printf "\e[1;31m%-30s %-20s %s\n\e[0m" "Algo: $algo," "Factors: $factors," "Hash: $hash"
 		else
 			printf "\e[1;30m%-30s %-20s %s\n\e[0m" "Algo: $algo," "Factors: $factors," "Hash: $hash"
