@@ -62,6 +62,7 @@ do
 			t=$a
 			[ ! "$fsname" == "null" ] && val=$fsname
 			[ "$fsname" == "null" ] && val="Autoswitch $algo"
+			echo "$fsname - $val" >> $LOG_FILE
 			while [ ! "$tmp0" == "null" ]
 			do
 				tmp0=$(echo "$FS" | jq .data[$n].name | tr -d \")
