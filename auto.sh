@@ -62,11 +62,11 @@ do
 			t=$a
 			[ ! "$fsname" == "null" ] && val=$fsname
 			[ "$fsname" == "null" ] && val="Autoswitch $algo"
-			echo "$fsname - $val" >> $LOG_FILE
+			echo "fs in log: $fsname - $val" >> $LOG_FILE
 			while [ ! "$tmp0" == "null" ]
 			do
 				tmp0=$(echo "$FS" | jq .data[$n].name | tr -d \")
-				
+				echo "fs in hive: $tmp0 - $val" >> $LOG_FILE
 				if [ "$val" == "$tmp0" ]
 				then
 					FS_ALGO[$a]=$algo
