@@ -1,11 +1,9 @@
 #!/bin/bash
 source "conf.all.conf"
-
+echo "" > $LOG_FILE
 echo $$ >> $PIDS_FILE 
 [ "$1" = "-fc" ] && source "$2"
-
-[ -z "$TOKEN" ] && exit
-
+[ -z "$TOKEN" ] && echo "Can't find token." >> $LOG_FILE && echo "Can't find token. Please edit config file." && exit
 
 function print {
 response=`curl -s -w "\n%{http_code}" \
@@ -17,7 +15,7 @@ response=`curl -s -w "\n%{http_code}" \
 [ $? -ne 0 ] && (>&2 echo 'Curl error')
 statusCode=`echo "$response" | tail -1`
 response=`echo "$response" | sed '$d'`
-[[ $statusCode -lt 200 || $statusCode -ge 300 ]] && { echo "$response" | jq 1>&2; }
+[[ $statusCode -lt 200 || $statusCode -ge 300 ]] && echo "Error in message $response" >> $LOG_FILE && echo "Error in fs apply" && echo "$response" | jq 1>&2
 
 }
 
@@ -31,16 +29,18 @@ response=`curl -s -w "\n%{http_code}" \
 [ $? -ne 0 ] && (>&2 echo 'Curl error')
 statusCode=`echo "$response" | tail -1`
 response=`echo "$response" | sed '$d'`
-[[ $statusCode -lt 200 || $statusCode -ge 300 ]] && { echo "$response" | jq 1>&2; }
+[[ $statusCode -lt 200 || $statusCode -ge 300 ]] && echo "Error in fs apply $response" >> $LOG_FILE && echo "Error in fs apply" && echo "$response" | jq 1>&2
 }
 
 response=`curl -s -w "\n%{http_code}" \
          -H "Content-Type: application/json" \
          -H "Authorization: Bearer $TOKEN" \
          "$baseUrl/farms/$FARM_ID/fs"`
-FS=$(echo "$response" | sed '$d')
-
-
+[ $? -ne 0 ] && (>&2 echo 'Curl error')
+statusCode=`echo "$response" | tail -1`
+response=`echo "$response" | sed '$d'`
+[[ $statusCode -lt 200 || $statusCode -ge 300 ]] && echo "Error in get FS $response" >> $LOG_FILE  && echo "Error in get FS" && echo "$response" | jq 1>&2
+FS=$response
 
 tmp=""
 i=0
@@ -210,5 +210,4 @@ do
 	done
 	echo ""
 done
-
 
