@@ -3,13 +3,13 @@ source "conf.all.conf"
 
 ex=0
 package=$(dpkg -s curl | grep Status)
-[ -z "$package" ] && echo -e "\e[1;31mNot find package curl.	Please install curl.\e[0m" && ex=1
+[ -z "$package" ] && echo "Not find package curl" >> $LOG_FILE && echo -e "\e[1;31mNot find package curl.	Please install curl.\e[0m" && ex=1
 package=$(dpkg -s jq | grep Status)
-[ -z "$package" ] && echo -e "\e[1;31mNot find package jq.	Please install jq.\e[0m" && ex=1
+[ -z "$package" ] && echo "Not find package jq" >> $LOG_FILE && echo -e "\e[1;31mNot find package jq.	Please install jq.\e[0m" && ex=1
 package=$(dpkg -s bc | grep Status)
-[ -z "$package" ] && echo -e "\e[1;31mNot find package bc.	Please install bc.\e[0m" && ex=1
+[ -z "$package" ] && echo "Not find package bc" >> $LOG_FILE && echo -e "\e[1;31mNot find package bc.	Please install bc.\e[0m" && ex=1
 package=$(dpkg -s screen | grep Status)
-[ -z "$package" ] && echo -e "\e[1;31mNot find package screen.	Please install screen.\e[0m" && ex=1
+[ -z "$package" ] && echo "Not find package screen" >> $LOG_FILE && echo -e "\e[1;31mNot find package screen.	Please install screen.\e[0m" && ex=1
 
 
 [ $ex -eq 1 ] && exit
