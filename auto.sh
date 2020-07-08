@@ -65,9 +65,10 @@ do
 			echo "FS in conf: $fsname - $val" >> $LOG_FILE
 			while [ ! "$tmp0" == "null" ]
 			do
-				tmp0=$(echo "$FS" | jq .data[$n].name | tr -d \")
-				echo "FS in hive: $tmp0; in conf $val" >> $LOG_FILE
-				if [ "$val" == "$tmp0" ]
+				tmp0=$(echo "$FS" | jq .data[$n].id | tr -d \")
+				name=$(echo "$FS" | jq .data[$n].name | tr -d \")
+				echo "FS in hive: $name; in conf $val" >> $LOG_FILE
+				if [ "$val" == "$name" ]
 				then
 					FS_ALGO[$a]=$algo
 					FS_ID[$a]=$(echo "$FS" | jq .data[$n].id)
