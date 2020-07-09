@@ -78,12 +78,12 @@ do
 					printf "\e[1;33m%-30s %-20s %s\n\e[0m" "Algo: ${FS_ALGO[$a]}," "Factors: ${FS_FACTORS[$a]}," "Hash: ${FS_HASH[$a]}"
 					((a++))
 					((n++))
-					echo "FS $val find in FS Hive" >> $LOG_FILE
+					echo "FIND FS $val in Hive" >> $LOG_FILE
 					break
 				fi
 				((n++))
 			done
-			[ $t -eq $a ] && echo "FS $val not find in FS Hive" >> $LOG_FILE
+			[ $t -eq $a ] && echo "NOT FIND $val in Hive" >> $LOG_FILE
 			[ $t -eq $a ] && printf "\e[1;31m%-30s %-20s %s\n\e[0m" "Algo: $algo," "Factors: $factors," "Hash: $hash"
 		else
 			printf "\e[1;30m%-30s %-20s %s\n\e[0m" "Algo: $algo," "Factors: $factors," "Hash: $hash"
@@ -125,7 +125,6 @@ do
 					AUTOFS[${#AUTOFS[*]}]="[\"${FS_ALGO[$x]}\",${FS_ID[$x]},$profit,\"${FS_NAME[$x]}\"]"
 				fi
 			done
-
 			((i++))
 		fi
 	done
