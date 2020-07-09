@@ -41,7 +41,6 @@ FACTORS делитель для расчета прибыльности, в ос
 Установка<br>
 git clone https://github.com/isansn/AutoSwitch.git<br>
 cd AutoSwitch<br>
-chmod +x auto.sh run.sh<br>
 Для начала меняем только RIG_ID, FARM_ID и TOKEN<br>
 nano config.conf <br>
 ./run.sh start &<br>
