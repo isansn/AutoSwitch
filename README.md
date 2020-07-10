@@ -48,3 +48,8 @@ screen -r auto<br>
 <br>
 Добавлена возможность называть полетные листы.<br>
 Пример в config.eth_from_ethermine_to_nice.conf дает возможность переключать риг с ethermine на nice (или ZIL), только тогда когда профит на nice по DaggerHashimoto превышает KAWPOW, GrinCuckatoo32, BeamV3, GrinCuckatoo31, Cuckaroom и обратно на ethermine.
+
+Автозапуск при загрузке<br>
+echo "@reboot sleep 60 && /home/user/AutoSwitch/run.sh start &" >> /var/spool/cron/crontabs/root<br>
+или<br>
+echo "@reboot sleep 60 && /home/user/AutoSwitch/run.sh start all &" >> /var/spool/cron/crontabs/root<br><br>
