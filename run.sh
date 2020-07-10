@@ -3,6 +3,8 @@
 d=`dirname "$0"` fullpath=`cd "$d"; pwd`/`basename "$0"`
 source "$d/conf.all.conf"
 
+echo "" > $LOG_FILE
+
 ex=0
 package=$(dpkg -s curl | grep Status)
 [ -z "$package" ] && echo "Not find package curl" >> $LOG_FILE && echo -e "\e[1;31mNot find package curl.	Please install curl.\e[0m" && ex=1
