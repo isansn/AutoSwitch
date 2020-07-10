@@ -1,5 +1,5 @@
 #!/bin/bash
-source "conf.all.conf"
+source "$HOME/AutoSwitch/conf.all.conf"
 
 ex=0
 package=$(dpkg -s curl | grep Status)
