@@ -2,7 +2,6 @@
 d=`dirname "$0"` fullpath=`cd "$d"; pwd`/`basename "$0"`
 source "$d/conf.all.conf"
 
-echo "" > $LOG_FILE
 echo $$ >> $PIDS_FILE 
 
 [ "$1" = "-fc" ] && source "$2"
