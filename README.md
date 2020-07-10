@@ -58,5 +58,7 @@ echo "@reboot sleep 60 && /home/user/AutoSwitch/run.sh start all 1 >/dev/null 2>
 sudo echo "@reboot sleep 60 && /home/user/AutoSwitch/run.sh start 1 >/dev/null 2>/dev/null" >> /var/spool/cron/crontabs/$USER<br>
 или<br>
 sudo echo "@reboot sleep 60 && /home/user/AutoSwitch/run.sh start all 1 >/dev/null 2>/dev/null" >> /var/spool/cron/crontabs/$USER<br>
+<br>
+Или через crontab -e вставить строку @reboot sleep 60 && /home/user/AutoSwitch/run.sh start 1 >/dev/null 2>/dev/null
 <br><br>
 
