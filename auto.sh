@@ -2,7 +2,7 @@
 source "$HOME/AutoSwitch/conf.all.conf"
 echo "" > $LOG_FILE
 echo $$ >> $PIDS_FILE 
-[ "$1" = "-fc" ] && source "$2"
+[ "$1" = "-fc" ] && source "$HOME/AutoSwitch/$2"
 [ -z "$TOKEN" ] && echo "Can't find token." >> $LOG_FILE && echo "Can't find token. Please edit config file." && exit
 
 function print {
