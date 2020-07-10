@@ -47,6 +47,16 @@ nano config.conf <br>
 screen -r auto<br>
 <br>
 Добавлена возможность называть полетные листы.<br>
-Пример в config.eth_from_ethermine_to_nice.conf дает возможность переключать риг с ethermine на nice (или ZIL), только тогда когда профит на nice по DaggerHashimoto превышает KAWPOW, GrinCuckatoo32, BeamV3, GrinCuckatoo31, Cuckaroom и обратно на ethermine.
-
+Пример в config.eth_from_ethermine_to_nice.conf дает возможность переключать риг с ethermine на nice (или ZIL), только тогда когда профит на nice по DaggerHashimoto превышает KAWPOW, GrinCuckatoo32, BeamV3, GrinCuckatoo31, Cuckaroom и обратно на ethermine.<br>
+<br>
+Автозапуск в HiveOS<br>
+echo "@reboot sleep 60 && /home/user/AutoSwitch/run.sh start 1 >/dev/null 2>/dev/null" >> /hive/etc/crontab.root<br>
+или<br>
+echo "@reboot sleep 60 && /home/user/AutoSwitch/run.sh start all 1 >/dev/null 2>/dev/null" >> /hive/etc/crontab.root<br>
+<br>
+Автозапуск в нормальной ОС<br>
+sudo echo "@reboot sleep 60 && /home/user/AutoSwitch/run.sh start 1 >/dev/null 2>/dev/null" >> /var/spool/cron/crontabs/$USER<br>
+или<br>
+sudo echo "@reboot sleep 60 && /home/user/AutoSwitch/run.sh start all 1 >/dev/null 2>/dev/null" >> /var/spool/cron/crontabs/$USER<br>
+<br><br>
 
