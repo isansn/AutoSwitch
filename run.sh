@@ -45,10 +45,10 @@ then
 	then
 		for i in $(ls config.*.conf); do
 			arr=($(echo $i | tr "." "\n"))
-			screen -dmS auto-${arr[1]} ./auto.sh -fc $i
+			screen -dmS auto-${arr[1]} $HOME/AutoSwitch/auto.sh -fc $i
 		done
 	else
-		screen -dmS auto ./auto.sh -fc config.conf
+		screen -dmS auto $HOME/AutoSwitch/auto.sh -fc config.conf
 	fi
 fi
 
