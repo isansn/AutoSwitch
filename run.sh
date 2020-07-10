@@ -1,5 +1,7 @@
 #!/bin/bash
-source "$HOME/AutoSwitch/conf.all.conf"
+
+d=`dirname "$0"` fullpath=`cd "$d"; pwd`/`basename "$0"`
+source "$d/conf.all.conf"
 
 ex=0
 package=$(dpkg -s curl | grep Status)
@@ -43,12 +45,12 @@ then
 	stop
 	if [ ! -z "$all" ]
 	then
-		for i in $(ls config.*.conf); do
+		for i in $(ls $d/config.*.conf); do
 			arr=($(echo $i | tr "." "\n"))
-			screen -dmS auto-${arr[1]} $HOME/AutoSwitch/auto.sh -fc $i
+			screen -dmS auto-${arr[1]} $d/auto.sh -fc $i
 		done
 	else
-		screen -dmS auto $HOME/AutoSwitch/auto.sh -fc $HOME/AutoSwitch/config.conf
+		screen -dmS auto $HOME/AutoSwitch/auto.sh -fc $d/config.conf
 	fi
 fi
 
