@@ -53,7 +53,7 @@ then
 			screen -dmS auto-${arr[1]} $d/auto.sh -fc $i
 		done
 	else
-		screen -dmS auto $HOME/AutoSwitch/auto.sh -fc $d/config.conf
+		screen -dmS auto $d//auto.sh -fc $d/config.conf
 	fi
 fi
 
