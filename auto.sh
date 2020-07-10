@@ -1,7 +1,10 @@
 #!/bin/bash
-source "$HOME/AutoSwitch/conf.all.conf"
+d=`dirname "$0"` fullpath=`cd "$d"; pwd`/`basename "$0"`
+source "$d/conf.all.conf"
+
 echo "" > $LOG_FILE
 echo $$ >> $PIDS_FILE 
+
 [ "$1" = "-fc" ] && source "$2"
 [ -z "$TOKEN" ] && echo "Can't find token." >> $LOG_FILE && echo "Can't find token. Please edit config file." && exit
 
