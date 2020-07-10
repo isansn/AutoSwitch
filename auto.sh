@@ -1,11 +1,9 @@
 #!/bin/bash
 source "$HOME/AutoSwitch/conf.all.conf"
-
+echo "" > $LOG_FILE
 echo $$ >> $PIDS_FILE 
 [ "$1" = "-fc" ] && source "$2"
-
-[ -z "$TOKEN" ] && exit
-
+[ -z "$TOKEN" ] && echo "Can't find token." >> $LOG_FILE && echo "Can't find token. Please edit config file." && exit
 
 function print {
 response=`curl -s -w "\n%{http_code}" \
@@ -17,7 +15,7 @@ response=`curl -s -w "\n%{http_code}" \
 [ $? -ne 0 ] && (>&2 echo 'Curl error')
 statusCode=`echo "$response" | tail -1`
 response=`echo "$response" | sed '$d'`
-[[ $statusCode -lt 200 || $statusCode -ge 300 ]] && { echo "$response" | jq 1>&2; }
+[[ $statusCode -lt 200 || $statusCode -ge 300 ]] && echo "Error in message $response" >> $LOG_FILE && echo "Error in fs apply" && echo "$response" | jq 1>&2
 
 }
 
@@ -31,16 +29,18 @@ response=`curl -s -w "\n%{http_code}" \
 [ $? -ne 0 ] && (>&2 echo 'Curl error')
 statusCode=`echo "$response" | tail -1`
 response=`echo "$response" | sed '$d'`
-[[ $statusCode -lt 200 || $statusCode -ge 300 ]] && { echo "$response" | jq 1>&2; }
+[[ $statusCode -lt 200 || $statusCode -ge 300 ]] && echo "Error in fs apply $response" >> $LOG_FILE && echo "Error in fs apply" && echo "$response" | jq 1>&2
 }
 
 response=`curl -s -w "\n%{http_code}" \
          -H "Content-Type: application/json" \
          -H "Authorization: Bearer $TOKEN" \
          "$baseUrl/farms/$FARM_ID/fs"`
-FS=$(echo "$response" | sed '$d')
-
-
+[ $? -ne 0 ] && (>&2 echo 'Curl error')
+statusCode=`echo "$response" | tail -1`
+response=`echo "$response" | sed '$d'`
+[[ $statusCode -lt 200 || $statusCode -ge 300 ]] && echo "Error in get FS $response" >> $LOG_FILE  && echo "Error in get FS" && echo "$response" | jq 1>&2
+FS=$response
 
 tmp=""
 i=0
@@ -62,11 +62,13 @@ do
 			t=$a
 			[ ! "$fsname" == "null" ] && val=$fsname
 			[ "$fsname" == "null" ] && val="Autoswitch $algo"
+			echo "FS in conf: $fsname - $val" >> $LOG_FILE
 			while [ ! "$tmp0" == "null" ]
 			do
-				tmp0=$(echo "$FS" | jq .data[$n].name | tr -d \")
-				
-				if [ "$val" == "$tmp0" ]
+				tmp0=$(echo "$FS" | jq .data[$n].id | tr -d \")
+				name=$(echo "$FS" | jq .data[$n].name | tr -d \")
+				echo "FS in hive: $name; in conf $val" >> $LOG_FILE
+				if [ "$val" == "$name" ]
 				then
 					FS_ALGO[$a]=$algo
 					FS_ID[$a]=$(echo "$FS" | jq .data[$n].id)
@@ -75,9 +77,13 @@ do
 					FS_NAME[$a]=$val
 					printf "\e[1;33m%-30s %-20s %s\n\e[0m" "Algo: ${FS_ALGO[$a]}," "Factors: ${FS_FACTORS[$a]}," "Hash: ${FS_HASH[$a]}"
 					((a++))
+					((n++))
+					echo "FIND FS $val in Hive" >> $LOG_FILE
+					break
 				fi
 				((n++))
 			done
+			[ $t -eq $a ] && echo "NOT FIND $val in Hive" >> $LOG_FILE
 			[ $t -eq $a ] && printf "\e[1;31m%-30s %-20s %s\n\e[0m" "Algo: $algo," "Factors: $factors," "Hash: $hash"
 		else
 			printf "\e[1;30m%-30s %-20s %s\n\e[0m" "Algo: $algo," "Factors: $factors," "Hash: $hash"
@@ -119,7 +125,6 @@ do
 					AUTOFS[${#AUTOFS[*]}]="[\"${FS_ALGO[$x]}\",${FS_ID[$x]},$profit,\"${FS_NAME[$x]}\"]"
 				fi
 			done
-
 			((i++))
 		fi
 	done
@@ -210,5 +215,3 @@ do
 	done
 	echo ""
 done
-
-
