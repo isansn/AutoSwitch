@@ -4,6 +4,7 @@ d=`dirname "$0"` fullpath=`cd "$d"; pwd`/`basename "$0"`
 source "$d/conf.all.conf"
 
 echo "" > $LOG_FILE
+echo "$d" >> $LOG_FILE
 
 ex=0
 package=$(dpkg -s curl | grep Status)
