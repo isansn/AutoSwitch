@@ -1,5 +1,5 @@
 #!/bin/bash
-source "conf.all.conf"
+source "$HOME/AutoSwitch/conf.all.conf"
 echo "" > $LOG_FILE
 echo $$ >> $PIDS_FILE 
 [ "$1" = "-fc" ] && source "$2"
