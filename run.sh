@@ -58,10 +58,12 @@ then
 fi
 
 echo $$ >> $PIDS_FILE 
-
 while true
 do
-	nice=`curl -k -s $niceUrl`
-	echo $nice > $NICE_FILE
-	sleep $INTERVAL
+	while true
+	do
+		nice=`curl -k -s $niceUrl`
+		echo $nice > $NICE_FILE
+		sleep $INTERVAL
+	done
 done
