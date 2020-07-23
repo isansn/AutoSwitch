@@ -111,8 +111,6 @@ do
 	nice=$(cat $NICE_FILE)
 
 	i=0
-	max=0
-	maxi=0
 	while [ ! "$title" == "null" ]
 	do
 		title=$(echo $nice | jq .miningAlgorithms[$i].title | tr -d \")
@@ -132,7 +130,7 @@ do
 	done
 	for (( y = 0; y < ${#AUTOFS[*]}-1; y++ ))
 	do
-		max=0
+		max=-1
 		maxi=0
 		for (( x = 0+$y; x < ${#AUTOFS[*]}; x++ ))
 		do
