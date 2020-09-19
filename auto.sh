@@ -100,17 +100,18 @@ TIME=$(stat --format="%Y" $NICE_FILE)
 while true
 do
 	while [ "$TIME" -eq $(stat --format="%Y" $NICE_FILE) ]
-	do 
+	do
 		sleep 1
 	done
 	TIME=$(stat --format="%Y" $NICE_FILE)
-	
+
 	title=""
 	unset AUTOFS
-	
+
 	nice=$(cat $NICE_FILE)
 
 	i=0
+	#echo "1"
 	while [ ! "$title" == "null" ]
 	do
 		title=$(echo $nice | jq .miningAlgorithms[$i].title | tr -d \")
@@ -126,8 +127,18 @@ do
 				fi
 			done
 			((i++))
+			if [ $i -ge 200 ]
+			then
+				#tgl=$(date +'%m-%d-%H-%M')
+				#LOG_NICE_FILE="$NICE_FILE-"$tgl
+				echo "Error calc in nice profit" >> $LOG_FILE
+				#echo $nice > $LOG_NICE_FILE
+				sleep 30
+				nice=$(cat $NICE_FILE)
+			fi
 		fi
 	done
+	#echo "2"
 	for (( y = 0; y < ${#AUTOFS[*]}-1; y++ ))
 	do
 		max=-1
@@ -144,13 +155,14 @@ do
 		AUTOFS[$y]=${AUTOFS[$maxi]}
 		AUTOFS[$maxi]=$temp
 	done
+	#echo "3"
 	if [ -z "$best" ]; then
 		best=${AUTOFS[0]}
 		top_algo=$(echo "${AUTOFS[0]}" | jq .[0])
 		top_id=$(echo "${AUTOFS[0]}" | jq .[1])
 		top_profit=$(echo "${AUTOFS[0]}" | jq .[2])
 		top_name=$(echo "${AUTOFS[0]}" | jq .[3])
-		fs_apply
+		#fs_apply
 		MESSAGE="Autoswitch: Switch to $(echo $top_name | tr -d \") Profit=$top_profit BTC/day "
 		print
 	fi
@@ -165,6 +177,7 @@ do
 		fi
 	done
 
+	#echo "4"
 	top_algo=$(echo "${AUTOFS[0]}" | jq .[0])
 	top_id=$(echo "${AUTOFS[0]}" | jq .[1])
 	cur_algo=$(echo "$best" | jq .[0])
@@ -176,13 +189,12 @@ do
 		if (( $(echo "$d > $MIN_DIFF" |bc -l) ))
 		then
 			[ ! "$callalgo" == "$top_algo" ] && callalgo=$top_algo && cnt=0
-			
 			((cnt++))
 			if [ $cnt -ge $CALC_COUNT ]
 			then
 				best=${AUTOFS[0]}
 				echo "Switch to $top_algo"
-				fs_apply
+				#fs_apply
 				MESSAGE="Autoswitch: Switch to $(echo $top_name | tr -d \") Profit=$top_profit BTC/day "
 				print
 			fi
@@ -196,6 +208,7 @@ do
 		cnt=0
 	fi
 
+	#echo "5"
 	if [ "$top_algo" == "$cur_algo" ]; then
 		dfrof=$(echo "${AUTOFS[1]}" | jq .[2])
 		d=$(echo "$cur_profit $dfrof" | awk '{printf "%.3f", ($1 * 100 / $2 - 100)*-1}')
@@ -213,5 +226,6 @@ do
 		pr2=$(echo "${AUTOFS[$x]}" | jq .[2] | tr -d \")
 		printf "%-15s %-10s %-15s %-10s\n" "$al1" "$pr1" "$al2" "$pr2"
 	done
+	#echo "6"
 	echo ""
 done
