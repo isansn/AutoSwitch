@@ -194,7 +194,7 @@ do
 			then
 				best=${AUTOFS[0]}
 				echo "Switch to $top_algo"
-				#fs_apply
+				fs_apply
 				MESSAGE="Autoswitch: Switch to $(echo $top_name | tr -d \") Profit=$top_profit BTC/day "
 				print
 			fi
