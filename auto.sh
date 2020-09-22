@@ -162,7 +162,7 @@ do
 		top_id=$(echo "${AUTOFS[0]}" | jq .[1])
 		top_profit=$(echo "${AUTOFS[0]}" | jq .[2])
 		top_name=$(echo "${AUTOFS[0]}" | jq .[3])
-		#fs_apply
+		fs_apply
 		MESSAGE="Autoswitch: Switch to $(echo $top_name | tr -d \") Profit=$top_profit BTC/day "
 		print
 	fi
